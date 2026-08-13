@@ -1,0 +1,155 @@
+/* ============================================================
+   Campus OS — Global Styles
+   Design tokens + base reset + glassmorphism utilities
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Design Tokens ─────────────────────────────────────── */
+:root {
+  --os-bg:         #0f172a;
+  --os-primary:    #60a5fa;
+  --os-secondary:  #a78bfa;
+  --os-success:    #34d399;
+  --os-warning:    #fbbf24;
+  --os-danger:     #f472b6;
+  --os-text-1:     #e2e8f0;
+  --os-text-2:     #94a3b8;
+  --os-glass-bg:   rgba(30, 41, 59, 0.72);
+  --os-glass-border: rgba(51, 65, 85, 0.5);
+  --os-blur:       12px;
+  --os-radius:     12px;
+  --os-radius-lg:  18px;
+  --os-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #__next {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--os-bg);
+  color: var(--os-text-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+}
+
+/* ── Glassmorphism ─────────────────────────────────────────── */
+.glass {
+  background: var(--os-glass-bg);
+  backdrop-filter: blur(var(--os-blur));
+  -webkit-backdrop-filter: blur(var(--os-blur));
+  border: 1px solid var(--os-glass-border);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* ── Window Traffic Light Buttons ───────────────────────────── */
+.btn-close   { background: #ff5f57; }
+.btn-min     { background: #febc2e; }
+.btn-max     { background: #28c840; }
+
+.btn-close:hover   { filter: brightness(1.15); }
+.btn-min:hover     { filter: brightness(1.15); }
+.btn-max:hover     { filter: brightness(1.15); }
+
+/* ── Wallpaper Variants ─────────────────────────────────────── */
+.wallpaper-default {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #0f172a 100%);
+}
+.wallpaper-aurora {
+  background: linear-gradient(135deg, #0f172a 0%, #064e3b 35%, #1e3a5f 65%, #0f172a 100%);
+}
+.wallpaper-cosmos {
+  background: radial-gradient(ellipse at 20% 50%, #1a0533 0%, #0f172a 60%),
+              radial-gradient(ellipse at 80% 20%, #1e0b3a 0%, transparent 50%);
+}
+.wallpaper-mountains {
+  background: linear-gradient(180deg, #0c1445 0%, #1e2d5c 40%, #2d3561 60%, #0f172a 100%);
+}
+.wallpaper-abstract {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #14532d 50%, #1e1b4b 75%, #0f172a 100%);
+}
+
+/* ── Animations ─────────────────────────────────────────────── */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(0.95); opacity: 1; }
+  70%  { transform: scale(1.1); opacity: 0.5; }
+  100% { transform: scale(0.95); opacity: 1; }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.animate-spin-slow  { animation: spin-slow 8s linear infinite; }
+.animate-pulse-ring { animation: pulse-ring 2s ease-in-out infinite; }
+.animate-blink      { animation: blink 1s step-end infinite; }
+
+/* ── Dock ───────────────────────────────────────────────────── */
+.dock-item {
+  transition: transform var(--os-transition), filter var(--os-transition);
+  cursor: pointer;
+}
+.dock-item:hover {
+  transform: scale(1.35) translateY(-8px);
+  filter: brightness(1.1);
+}
+.dock-item:active {
+  transform: scale(0.92) translateY(-4px);
+}
+
+/* ── Spotlight ─────────────────────────────────────────────── */
+.spotlight-overlay {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── App window content area allow text selection ───────────── */
+.window-content {
+  user-select: text;
+}
+
+/* ── Progress bar shine ─────────────────────────────────────── */
+.progress-shine {
+  background: linear-gradient(90deg, var(--os-primary) 0%, var(--os-secondary) 100%);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
+}
