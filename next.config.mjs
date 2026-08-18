@@ -4,12 +4,11 @@ const nextConfig = {
   transpilePackages: ['react-rnd'],
   // Disable powered by header
   poweredByHeader: false,
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      './C:/Users/SUBHODAY/AppData/Local/CampusOS_app/node_modules/next/dist/client/app-next-dev.js': 'next/dist/client/app-next-dev.js',
-      './C:/Users/SUBHODAY/AppData/Local/CampusOS_app/node_modules/next/dist/client/next-dev.js': 'next/dist/client/next-dev.js',
-    };
+  webpack: (config, { dev }) => {
+    // Disable disk caching during development to prevent ENOSPC warnings on disk partitions
+    if (dev) {
+      config.cache = false;
+    }
     return config;
   },
 };
