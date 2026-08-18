@@ -348,10 +348,11 @@ export async function POST(req: NextRequest) {
       extracted_text_preview: extractedText.slice(0, 350) + (extractedText.length > 350 ? '...' : '')
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('API Error in analyze-resume:', error);
+    const errObj = error as Error;
     return NextResponse.json({ 
-      error: error.message || 'Internal server error while analyzing resume.' 
+      error: errObj.message || 'Internal server error while analyzing resume.' 
     }, { status: 500 });
   }
 }

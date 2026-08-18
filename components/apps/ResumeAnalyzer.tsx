@@ -5,10 +5,10 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  FileText, Upload, Zap, Target, CheckCircle, AlertCircle, 
-  ExternalLink, Globe, RefreshCw, BarChart2, Sparkles, Play,
+  FileText, Upload, Zap, Target, AlertCircle, 
+  ExternalLink, Globe, RefreshCw, Sparkles, Play,
   Copy, Check, Code, ShieldAlert, FileCheck, X, FileUp,
-  CheckCircle2, XCircle, AlertTriangle, FileCode, TrendingUp, Layers, HardDrive
+  CheckCircle2, XCircle, AlertTriangle, TrendingUp, Layers
 } from 'lucide-react';
 
 // Exact System Prompt required for Gemini ATS AI engine
@@ -123,7 +123,6 @@ export default function ResumeAnalyzer() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Extracting document & querying Gemini AI...');
   const [auditResult, setAuditResult] = useState<AtsAuditResult | null>(null);
-  const [extractedPreview, setExtractedPreview] = useState('');
   const [viewMode, setViewMode] = useState<'visual' | 'json'>('visual');
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [jsonCopied, setJsonCopied] = useState(false);
@@ -215,11 +214,12 @@ export default function ResumeAnalyzer() {
 
       setAuditResult(json.data);
       if (json.extracted_text_preview) {
-        setExtractedPreview(json.extracted_text_preview);
+        console.log('Extracted text preview length:', json.extracted_text_preview.length);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error during resume analysis:', err);
-      setErrorMessage(err.message || 'An unexpected error occurred during resume parsing.');
+      const errObj = err as Error;
+      setErrorMessage(errObj.message || 'An unexpected error occurred during resume parsing.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -706,7 +706,7 @@ export default function ResumeAnalyzer() {
                                   <div>
                                     <p className="text-[11px] text-[#94a3b8] font-semibold mb-1">Original Bullet:</p>
                                     <p className="text-xs text-[#cbd5e1] font-mono bg-[#1e293b]/60 p-2.5 rounded-lg border border-[#334155]/50">
-                                      "{item.original_text}"
+                                      &quot;{item.original_text}&quot;
                                     </p>
                                   </div>
 
@@ -718,7 +718,7 @@ export default function ResumeAnalyzer() {
                                   {/* Rewritten XYZ Bullet */}
                                   <div className="bg-gradient-to-r from-[#34d399]/10 to-[#60a5fa]/10 p-3 rounded-lg border border-[#34d399]/30">
                                     <p className="text-[11px] text-[#34d399] font-bold uppercase mb-1 flex items-center gap-1">
-                                      <Zap size={12} /> Rewritten (Google's XYZ Formula):
+                                      <Zap size={12} /> Rewritten (Google&apos;s XYZ Formula):
                                     </p>
                                     <p className="text-xs text-[#e2e8f0] font-medium leading-relaxed">
                                       {item.rewritten_version}
